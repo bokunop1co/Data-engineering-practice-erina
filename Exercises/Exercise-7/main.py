@@ -1,11 +1,17 @@
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as F
 from pyspark.sql import Window
+import zipfile
 
 
 def main():
     spark = SparkSession.builder.appName("Exercise7").enableHiveSupport().getOrCreate()
     # tu código va aquí
+
+    with zipfile.ZipFile("data/hard-drive-2022-01-01-failures.csv.zip") as z:
+        print(z.namelist())
+        contenido = z.read("hard-drive-2022-01-01-failures.csv") 
+        contenido = contenido.decode("utf-8")
 
     #leer el archivo CSV
     df= spark.read.csv("data/hard-drive-2022-01-01-failures.csv.zip", header=True, inferSchema=True)
